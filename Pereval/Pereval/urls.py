@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from Pereval_ID.views import UserViewset, CoordsViewset, LevelViewset, ImageViewset, PerevalViewset
+from Pereval_ID.views import *
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewset, basename='users')

@@ -35,7 +35,7 @@ class PerevalSerializer(WritableNestedModelSerializer):
     coord_id = CoordsSerializer()
     level = LevelSerializer(allow_null=True)
     images = ImageSerializer(many=True)
-    status = serializers.CharField(read_only=True)
+    status = serializers.CharField()
 
     class Meta:
         model = pereval_added
