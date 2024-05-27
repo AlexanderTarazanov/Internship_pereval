@@ -30,16 +30,29 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class PerevalSerializer(WritableNestedModelSerializer):
+    add_time = serializers.DateTimeField(format='%d-%m-%Y %H:%M:%S', read_only=True)
     tourist_id = UserSerializer()
     coord_id = CoordsSerializer()
     level = LevelSerializer(allow_null=True)
     images = ImageSerializer(many=True)
-    add_time = serializers.DateTimeField(format='%d-%m-%Y %H:%M:%S')
+    status = serializers.CharField(read_only=True)
 
     class Meta:
         model = pereval_added
-        fields = ('beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'tourist_id', 'coord_id', 'level',
-                  'images')
+        depth = 1
+        fields = (
+            'id',
+            'status',
+            'tourist_id',
+            'add_time',
+            'beauty_title',
+            'title',
+            'other_titles',
+            'connect',
+            'coord_id',
+            'level',
+            'images',
+        )
 
     def create(self, validated_data, **kwargs):
         tourist_id = validated_data.pop('tourist_id')
@@ -47,13 +60,12 @@ class PerevalSerializer(WritableNestedModelSerializer):
         level = validated_data.pop('level')
         images = validated_data.pop('images')
 
-        # user, created = Users.objects.get_or_create(**user)
-
         tourist_id, created = Users.objects.get_or_create(**tourist_id)
+
         coord_id = Coords.objects.create(**coord_id)
         level = Level.objects.create(**level)
         pereval = pereval_added.objects.create(**validated_data, tourist_id=tourist_id, coord_id=coord_id,
-                                               level=level, status='NW')
+                                               level=level, status='new')
 
         for i in images:
             image = i.pop('image')
@@ -62,36 +74,17 @@ class PerevalSerializer(WritableNestedModelSerializer):
 
         return pereval
 
-    def update(self, instance, validated_data):
-        tourist_id = validated_data.pop('tourist_id')
-        coord_id = validated_data.pop('coord_id')
-        level = validated_data.pop('level')
-        images = validated_data.pop('images')
-
-        tourist_id = Users.objects.update(**tourist_id)
-        coord_id = Coords.objects.update(**coord_id)
-        level = Level.objects.update(**level)
-
-        for i in images:
-            image = i.pop('image')
-            title = i.pop('title')
-            Images.objects.create(image=image, title=title)
-
-        return super().update(instance, validated_data)
-
     def validate(self, data):
         if self.instance is not None:
-            instance_user = self.instance.user
-            data_user = data.get('user')
-            validating_user_fields = [
-                instance_user.fam != data_user['fam'],
-                instance_user.name != data_user['name'],
-                instance_user.otc != data_user['otc'],
-                instance_user.phone != data_user['phone'],
-                instance_user.email != data_user['email'],
-
+            instance_tourist_id = self.instance.tourist_id
+            data_tourist_id = data.get('tourist_id')
+            validating_tourist_id_fields = [
+                instance_tourist_id.fam != data_tourist_id['fam'],
+                instance_tourist_id.name != data_tourist_id['name'],
+                instance_tourist_id.otc != data_tourist_id['otc'],
+                instance_tourist_id.phone != data_tourist_id['phone'],
+                instance_tourist_id.email != data_tourist_id['email'],
             ]
-
-            if data_user is not None and any(validating_user_fields):
+            if data_tourist_id is not None and any(validating_tourist_id_fields):
                 raise serializers.ValidationError({'Отклонено': 'Нельзя изменять данные пользователя'})
         return data
