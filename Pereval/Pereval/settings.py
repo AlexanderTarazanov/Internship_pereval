@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'Pereval_ID.apps.PerevalIdConfig',
     'rest_framework',
     'django_filters',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -80,23 +81,23 @@ WSGI_APPLICATION = 'Pereval.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
-#DATABASES = {
-#   'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'pereval_db',
-#        'USER': os.getenv('FSTR_DB_LOGIN'),
-#        'PASSWORD': os.getenv('FSTR_DB_PASS'),
-#        'HOST': os.getenv('FSTR_DB_HOST'),
-#        'PORT': os.getenv('FSTR_DB_PORT'),
-#    }
-#}
+DATABASES = {
+  'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': 'pereval_db',
+       'USER': os.getenv('FSTR_DB_LOGIN'),
+       'PASSWORD': os.getenv('FSTR_DB_PASS'),
+       'HOST': os.getenv('FSTR_DB_HOST'),
+       'PORT': os.getenv('FSTR_DB_PORT'),
+   }
+}
 
 
 
