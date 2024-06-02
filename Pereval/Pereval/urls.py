@@ -25,12 +25,12 @@ router.register(r'users', UserViewset, basename='users')
 router.register(r'coords', CoordsViewset, basename='coords')
 router.register(r'levels', LevelViewset, basename='levels')
 router.register(r'images', ImageViewset, basename='images')
-router.register(r'perevals', PerevalViewset, basename='perevals')
+router.register(r'pereval', PerevalViewset, basename='pereval')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 urlpatterns += doc_urls
