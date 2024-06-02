@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from .serializers import *
 from .models import *
 from rest_framework.response import Response
@@ -18,8 +18,8 @@ class CoordsViewset(viewsets.ModelViewSet):
 
 
 class LevelViewset(viewsets.ModelViewSet):
-   queryset = Level.objects.all()
-   serializer_class = LevelSerializer
+    queryset = Level.objects.all()
+    serializer_class = LevelSerializer
 
 
 class ImageViewset(viewsets.ModelViewSet):
@@ -74,3 +74,7 @@ class PerevalViewset(viewsets.ModelViewSet):
                 'state': '0',
                 'message': f"Отклонено! Причина: {pereval.get_status_display()}"
             })
+
+
+class EmailAPIView(generics.ListAPIView):
+    serializer_class = PerevalSerializer

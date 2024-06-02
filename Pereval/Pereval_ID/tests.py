@@ -34,6 +34,10 @@ class pereval_addedTestCase(APITestCase):
                 spring=''
             ),
         )
+        self.image_1 = Images.objects.create(
+            image="",
+            title="Test1",
+        )
 
         self.pereval_2 = pereval_added.objects.create(
             status='',
@@ -60,6 +64,10 @@ class pereval_addedTestCase(APITestCase):
                 autumn='',
                 spring=''
             ),
+        )
+        self.image_2 = Images.objects.create(
+            image="",
+            title="Test2",
         )
 
     def test_get_list(self):
@@ -109,6 +117,10 @@ class PerevalSerializerTestCase(TestCase):
                 spring=''
             ),
         )
+        self.image_1 = Images.objects.create(
+            image="",
+            title="Test1",
+        )
 
         self.pereval_2 = pereval_added.objects.create(
             id=2,
@@ -137,6 +149,10 @@ class PerevalSerializerTestCase(TestCase):
                 spring=''
             ),
         )
+        self.image_2 = Images.objects.create(
+            image="",
+            title="Test2",
+        )
 
     def test_check(self):
         serializer_data = PerevalSerializer([self.pereval_1, self.pereval_2], many=True).data
@@ -151,7 +167,7 @@ class PerevalSerializerTestCase(TestCase):
                     'otc': 'Test1',
                     'phone': '79998887766'
                 },
-                'add_time': str(self.pereval_1.add_time),
+                'add_time': self.pereval_1.add_time.strftime('%d-%m-%Y %H:%M:%S'),
                 'beauty_title': 'Test1',
                 'title': 'Test1',
                 'other_titles': 'Test1',
@@ -163,10 +179,13 @@ class PerevalSerializerTestCase(TestCase):
                 },
                 'level': {
                     'winter': '4A',
+                    'spring': '',
                     'summer': '',
                     'autumn': '',
-                    'spring': ''
                 },
+                'images': [
+
+                ]
             },
             {
                 'id': 2,
@@ -178,7 +197,7 @@ class PerevalSerializerTestCase(TestCase):
                     'otc': 'Test2',
                     'phone': '79998889988'
                 },
-                'add_time': str(self.pereval_2.add_time),
+                'add_time': self.pereval_2.add_time.strftime('%d-%m-%Y %H:%M:%S'),
                 'beauty_title': 'Test2',
                 'title': 'Test2',
                 'other_titles': 'Test2',
@@ -190,11 +209,18 @@ class PerevalSerializerTestCase(TestCase):
                 },
                 'level': {
                     'winter': '3A',
+                    'spring': '',
                     'summer': '',
                     'autumn': '',
-                    'spring': ''
                 },
+                'images': [
 
+                ]
             },
         ]
+        # print('*************************')
+        # print(serializer_data)
+        # print('*************************')
+        # print(expected_data)
+        # print('*************************')
         self.assertEqual(serializer_data, expected_data)

@@ -26,7 +26,8 @@ class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Images
-        fields = ('image', 'title',)
+        fields = ('image', 'title')
+        verbose_name = 'Фото'
 
 
 class PerevalSerializer(WritableNestedModelSerializer):
