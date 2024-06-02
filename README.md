@@ -120,4 +120,5 @@ API Pereval: <https://alextarazanov.pythonanywhere.com/>
 ***
 **Отчет о покрытии тестами:**
 
-![2](https://github.com/AlexanderTarazanov/Internship_pereval/assets/17230586/09aa6873-662e-41be-9476-75978be09aa9)
+![2](https://github.com/AlexanderTarazanov/Internship_pereval/assets/17230586/d850d67e-590d-4fd8-8b95-3808cb1171d9)
+
