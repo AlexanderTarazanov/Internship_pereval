@@ -62,7 +62,7 @@ class pereval_added(models.Model):
     add_time = models.DateTimeField(auto_now_add=True)
     coord_id = models.ForeignKey('Coords', on_delete=models.CASCADE, blank=True, null=True)
     tourist_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="tourist_id")
-    status = models.CharField(max_length=10, choices=STATUS, default='new')
+    status = models.CharField(max_length=10, choices=STATUS, default=new)
     level = models.ForeignKey('Level', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:

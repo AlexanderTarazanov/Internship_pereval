@@ -36,14 +36,11 @@ class PerevalSerializer(WritableNestedModelSerializer):
     coord_id = CoordsSerializer()
     level = LevelSerializer(allow_null=True)
     images = ImageSerializer(many=True)
-    status = serializers.CharField()
 
     class Meta:
         model = pereval_added
-        depth = 1
-        fields = (
+        fields = [
             'id',
-            'status',
             'tourist_id',
             'add_time',
             'beauty_title',
@@ -53,7 +50,7 @@ class PerevalSerializer(WritableNestedModelSerializer):
             'coord_id',
             'level',
             'images',
-        )
+        ]
 
     def create(self, validated_data, **kwargs):
         tourist_id = validated_data.pop('tourist_id')
